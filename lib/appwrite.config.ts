@@ -12,7 +12,7 @@ import * as sdk from "node-appwrite";
 //   NEXT_PUBLIC_BUCKET_ID: BUCKET_ID,
 // } = process.env;
 
-console.log("Appwrite Config:", process.env.NEXT_PUBLIC_ENDPOINT, process.env.PROJECT_ID, process.env.API_KEY);
+// console.log("Appwrite Config:", process.env.NEXT_PUBLIC_ENDPOINT, process.env.PROJECT_ID, process.env.API_KEY);
 
 // if (!process.env.NEXT_PUBLIC_ENDPOINT || !process.env.PROJECT_ID || !process.env.API_KEY) {
 //   throw new Error("Missing required environment variables");
