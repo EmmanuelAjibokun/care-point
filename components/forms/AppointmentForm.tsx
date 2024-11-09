@@ -15,7 +15,7 @@ import "react-phone-number-input/style.css";
 import SubmitButton from "../SubmitButton";
 
 
-const PatientForm = () => {
+const AppointmentForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -40,7 +40,7 @@ const PatientForm = () => {
       const newUser = await createUser(userData);
 
       if(newUser) {
-        router.push(`/patients/${newUser.$id}/register`)
+        router.push(`/Appointments/${newUser.$id}/register`)
       }
     } catch (error) {
       console.log(error)
@@ -92,4 +92,4 @@ const PatientForm = () => {
   );
 };
 
-export default PatientForm;
+export default AppointmentForm;

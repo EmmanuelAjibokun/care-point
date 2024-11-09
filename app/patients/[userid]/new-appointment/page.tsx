@@ -1,15 +1,15 @@
-import RegisterForm from "@/components/forms/RegisterForm"
+import AppointmentForm from "@/components/forms/AppointmentForm"
 import { getUser } from "@/lib/actions/patient.actions"
 import Image from "next/image"
 
-const Register = async({ params: { userid } }: SearchParamProps) => {
+const NewAppointment = async({ params: { userid } }: SearchParamProps) => {
   const user = await getUser(userid)
 
   return (
     <div className="flex h-screen max-h-screen">
 
-      <section className="remove-scrollbar container">
-        <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
+      <section className="remove-scrollbar container my-auto">
+        <div className="sub-container max-w-[860px] flex-1 justify-between">
           <Image
             src="/assets/icons/logo-full.svg"
             height={1000}
@@ -18,7 +18,7 @@ const Register = async({ params: { userid } }: SearchParamProps) => {
             className="mb-12 h-10 w-fit"
           />
 
-          <RegisterForm user = { user }/>
+          <AppointmentForm user={user}/>
 
           <p className="copyright py-12">
             &copy; 2024 CarePoint
@@ -27,7 +27,7 @@ const Register = async({ params: { userid } }: SearchParamProps) => {
       </section>
 
       <Image
-        src="/assets/images/register-img.png"
+        src="/assets/images/NewAppointment-img.png"
         height={1000}
         width={1000}
         alt="patient"
@@ -37,4 +37,4 @@ const Register = async({ params: { userid } }: SearchParamProps) => {
   )
 }
 
-export default Register
+export default NewAppointment;
