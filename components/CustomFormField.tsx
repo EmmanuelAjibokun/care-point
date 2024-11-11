@@ -38,14 +38,14 @@ interface CustomProps {
   iconSrc?: string,
   iconAlt?: string,
   disabled?: boolean,
-  dataFormat?: string,
+  dateFormat?: string,
   showTimeSelect?: boolean,
   children?: React.ReactNode,
   renderSkeleton?: (field: any) => React.ReactNode,
 }
 
 const RenderField = ({ field, props } : { field: any; props: CustomProps}) => {
-  const { fieldType, name, label, placeholder, iconSrc, iconAlt, disabled, dataFormat, showTimeSelect, renderSkeleton } = props;
+  const { fieldType, name, label, placeholder, iconSrc, iconAlt, disabled, dateFormat, showTimeSelect, renderSkeleton } = props;
     switch (fieldType) {
       case FormFieldType.INPUT:
         return (
@@ -97,7 +97,7 @@ const RenderField = ({ field, props } : { field: any; props: CustomProps}) => {
             <DatePicker 
               selected={field.value}
               onChange={(date) => field.onChange(date)}
-              dateFormat={dataFormat ?? "MM/dd/yyyy"}
+              dateFormat={dateFormat ?? "MM/dd/yyyy"}
               showTimeSelect={showTimeSelect ?? false}
               timeInputLabel='Time:'
               wrapperClassName='data-picker'

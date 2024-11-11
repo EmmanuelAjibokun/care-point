@@ -1,9 +1,11 @@
 import AppointmentForm from "@/components/forms/AppointmentForm"
-import { getUser } from "@/lib/actions/patient.actions"
+import { getPatient } from "@/lib/actions/patient.actions"
 import Image from "next/image"
 
-const NewAppointment = async({ params: { userid } }: SearchParamProps) => {
-  const user = await getUser(userid)
+const NewAppointment = async({ params }: SearchParamProps) => {
+  const { userid } = await params
+  const patient = await getPatient(userid);
+
 
   return (
     <div className="flex h-screen max-h-screen">
@@ -18,7 +20,11 @@ const NewAppointment = async({ params: { userid } }: SearchParamProps) => {
             className="mb-12 h-10 w-fit"
           />
 
-          <AppointmentForm user={user}/>
+          <AppointmentForm 
+            userId={userid}
+            patientId={patient.$id}
+            type="create"
+          />
 
           <p className="copyright py-12">
             &copy; 2024 CarePoint
@@ -27,7 +33,7 @@ const NewAppointment = async({ params: { userid } }: SearchParamProps) => {
       </section>
 
       <Image
-        src="/assets/images/NewAppointment-img.png"
+        src="/assets/images/appointment-img.png"
         height={1000}
         width={1000}
         alt="patient"
