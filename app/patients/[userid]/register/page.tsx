@@ -2,7 +2,8 @@ import RegisterForm from "@/components/forms/RegisterForm"
 import { getUser } from "@/lib/actions/patient.actions"
 import Image from "next/image"
 
-const Register = async({ params: { userid } }: SearchParamProps) => {
+const Register = async({ params }: SearchParamProps) => {
+  const { userid } = await params
   const user = await getUser(userid)
 
   return (

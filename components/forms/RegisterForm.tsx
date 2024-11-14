@@ -134,7 +134,7 @@ const RegisterForm = ({ user }: { user: User }) => {
               control={form.control}
               name="email"
               label="Email address"
-              placeholder="johndow@gmail.com"
+              placeholder="johndoe@gmail.com"
               iconSrc="/assets/icons/email.svg"
               iconAlt="email"
             />

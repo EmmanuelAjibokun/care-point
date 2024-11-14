@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { getRecentAppointmentList } from "@/lib/actions/appointment.actions";
 import StatCard from "@/components/StatCard";
+import {DataTable} from "@/components/table/DataTable";
+import {columns} from "@/components/table/columns";
 
 const DoctorPage = async () => {
   const appointments = await getRecentAppointmentList();
@@ -53,7 +55,7 @@ const DoctorPage = async () => {
           />
         </section>
 
-        {/* <DataTable columns={columns} data={appointments.documents} /> */}
+        <DataTable columns={columns} data={appointments.documents} />
       </main>
     </div>
   );

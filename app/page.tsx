@@ -4,6 +4,7 @@ import Link from "next/link";
 import PasskeyModal from "@/components/PasskeyModal";
 
 export default function Home({ searchParams }: SearchParamProps) {
+  // const { admin } = await searchParams;
   const isAdmin = searchParams?.admin === "true";
 
   return (
