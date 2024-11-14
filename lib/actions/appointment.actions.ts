@@ -49,6 +49,7 @@ export const updateAppointment = async ({
   appointment,
   type,
 } : UpdateAppointmentParams) => {
+  console.log('time zone(outside): ', timeZone)
   try {
     // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
     const updatedAppointment = await databases.updateDocument(
@@ -59,6 +60,8 @@ export const updateAppointment = async ({
     )
 
     if (!updatedAppointment) throw Error;
+
+    console.log('time zone(inside try): ', timeZone)
 
     const smsMessage = `Greetings from CarePulse. ${type === "schedule" ? `Your appointment is confirmed for ${formatDateTime(appointment.schedule!, timeZone).dateTime} with Dr. ${appointment.primaryPhysician}` : `We regret to inform that your appointment for ${formatDateTime(appointment.schedule!, timeZone).dateTime} is cancelled. Reason:  ${appointment.cancellationReason}`}.`;
     await sendSMSNotification(userId, smsMessage);
