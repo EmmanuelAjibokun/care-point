@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// import {Plus_Jakarta_Sans} from "next/font/google";
+import {Plus_Jakarta_Sans as FontSans} from "next/font/google";
 import "./globals.css";
 
 import { cn } from "@/lib/utils"
@@ -10,14 +10,14 @@ import { ThemeProvider } from "@/components/theme-provide";
 //   variable: "--font-geist-sans",
 //   weight: "100 900",
 // });
-const fontSans = {
+const fontSans = FontSans({
   subsets: ["latin"],
-  weights: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans"
-}
+});
 
 export const metadata: Metadata = {
-  title: "HealthPlus",
+  title: "CarePoint",
   description: "A healthcare management system",
 };
 
