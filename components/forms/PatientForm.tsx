@@ -18,6 +18,7 @@ import SubmitButton from "../SubmitButton";
 const PatientForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
@@ -27,6 +28,7 @@ const PatientForm = () => {
       phone: "",
     },
   });
+  console.log("create newUser: ")
 
   // 2. Define a submit handler.
   const onSubmit = async ({ name, email, phone }: z.infer<typeof UserFormValidation>) => {
@@ -35,15 +37,22 @@ const PatientForm = () => {
 
     try {
       const userData = { name, email, phone }
-      console.log("userData", userData)
       // console.log(createUser(userData))
       const newUser = await createUser(userData);
+      console.log("create newUser: ", newUser)
+      setError("")
+
+      if(newUser[1]) {
+        router.push(`/patients/${newUser[0].$id}/new-appointment`);
+        return;
+      }
 
       if(newUser) {
         router.push(`/patients/${newUser.$id}/register`)
       }
     } catch (error) {
       console.log(error)
+      setError("Account Registered. Incorrect Email or Phone Number.")
     }
 
     setIsLoading(false);
@@ -85,6 +94,10 @@ const PatientForm = () => {
           label="Phone Number"
           placeholder="(234) 801 234 5678"
         />
+
+        <div>
+        {error && <p className="shad-error text-12-regular mt-4 flex justify-center">{error}</p>}
+        </div>
         
         <SubmitButton isLoading={isLoading}> Get Started</SubmitButton>
       </form>
