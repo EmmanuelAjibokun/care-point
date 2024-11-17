@@ -5,6 +5,7 @@ import Image from "next/image"
 const Register = async({ params }: SearchParamProps) => {
   const { userid } = await params
   const user = await getUser(userid)
+  // console.log("user",user)
 
   return (
     <div className="flex h-screen max-h-screen">
