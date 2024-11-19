@@ -22,6 +22,7 @@ import { SelectItem } from "../ui/select";
 import {
   Doctors,
   GenderOptions,
+  HospitalTypes,
   IdentificationTypes,
   PatientFormDefaultValues,
 } from "@/constants";
@@ -105,7 +106,7 @@ const BusinessRegisterForm = () => {
       >
         <section className="space-y-4">
           <h1 className="header">Welcome 👋</h1>
-          <p className="text-dark-700">Let us know more about you.</p>
+          <p className="text-dark-700">Tell us about your Company</p>
         </section>
 
         {/* BASIC INFORMATION */}
@@ -121,8 +122,8 @@ const BusinessRegisterForm = () => {
             name="hospitalName"
             label="Hospital Name"
             placeholder="City General Hospital"
-            iconSrc="/assets/icons/user.svg"
-            iconAlt="user"
+            iconSrc="/assets/icons/company.svg"
+            iconAlt="company"
           />
 
           {/* REGISTRATION NUMBER */}
@@ -135,19 +136,35 @@ const BusinessRegisterForm = () => {
               placeholder="REG123456"
             />
 
-            <CustomFormField
-              fieldType={FormFieldType.INPUT}
-              control={form.control}
-              name="email"
-              label="Email address"
-              placeholder="johndoe@gmail.com"
-              iconSrc="/assets/icons/email.svg"
-              iconAlt="email"
-            />
-
             {/* TYPE OF HOSPITAL(select field) */}
+            <CustomFormField
+            fieldType={FormFieldType.SELECT}
+            control={form.control}
+            name="hospitalType"
+            label="Type of Hospital"
+            placeholder="Select the type of your hospital"
+          >
+            {HospitalTypes.map((type, i) => (
+              <SelectItem key={type + i} value={type}>
+                <div className="flex cursor-pointer items-center gap-2">
+                  <p>{type}</p>
+                </div>
+              </SelectItem>
+            ))}
+          </CustomFormField>
 
             {/* HOSPITAL LOGO (file Upload) */}
+            <CustomFormField
+            fieldType={FormFieldType.SKELETON}
+            control={form.control}
+            name="logo"
+            label="Hospital Logo (Supported Formats: .jpg, .png, .svg)"
+            renderSkeleton={(field) => (
+              <FormControl>
+                <FileUploader files={field.value} onChange={field.onChange} />
+              </FormControl>
+            )}
+          />
           </div>
 
           {/* BIRTHDATE & GENDER */}
