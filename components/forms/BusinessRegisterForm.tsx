@@ -317,6 +317,10 @@ const BusinessRegisterForm = () => {
               label="Number of Staff Members"
               placeholder="Enter total staff count"
             />
+
+            {/* Doctors */}
+            
+
           </div>
         </section>
 
@@ -324,6 +328,14 @@ const BusinessRegisterForm = () => {
           <div className="mb-6 space-y-1">
             <h2 className="sub-header">Operational Details</h2>
           </div>
+
+          <CustomFormField
+              fieldType={FormFieldType.PHONE_INPUT}
+              control={form.control}
+              name="emergencyContact"
+              label="Emergency Contact"
+              placeholder="Enter emergency contact number"
+            />
 
           {/* PRIMARY CARE PHYSICIAN */}
           <CustomFormField
@@ -363,36 +375,6 @@ const BusinessRegisterForm = () => {
           {/* ACCREDITATIONS (Multi-Select Field) */}
 
           {/* LICENSE UPLOAD (File Upload) */}
-
-        </section>
-
-        <section className="space-y-6">
-          <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Identification and Verfication</h2>
-          </div>
-
-          <CustomFormField
-            fieldType={FormFieldType.SELECT}
-            control={form.control}
-            name="identificationType"
-            label="Identification Type"
-            placeholder="Select identification type"
-          >
-            {IdentificationTypes.map((type, i) => (
-              <SelectItem key={type + i} value={type}>
-                {type}
-              </SelectItem>
-            ))}
-          </CustomFormField>
-
-          <CustomFormField
-            fieldType={FormFieldType.INPUT}
-            control={form.control}
-            name="identificationNumber"
-            label="Identification Number"
-            placeholder="123456789"
-          />
-
           <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
@@ -404,34 +386,45 @@ const BusinessRegisterForm = () => {
               </FormControl>
             )}
           />
+
         </section>
 
-        {/* CONSENT AND PRIVACY */}
+        {/* PAYMENT & INSURANCE */}
         <section className="space-y-6">
           <div className="mb-9 space-y-1">
-            <h2 className="sub-header">Consent and Privacy</h2>
+            <h2 className="sub-header">Payment & Insurance</h2>
           </div>
 
+          {/* Insurance Providers Supported (Multi-Select Field) */}
           <CustomFormField
-            fieldType={FormFieldType.CHECKBOX}
+            fieldType={FormFieldType.SELECT}
             control={form.control}
-            name="treatmentConsent"
-            label="I consent to receive treatment for my health condition."
-          />
+            name="paymentMethods"
+            label="Payment Methods"
+            placeholder="Payment Methods Accepted"
+            // Options: Cash, Credit/Debit Card, Online Transfer, Insurance
+          >
+            {IdentificationTypes.map((type, i) => (
+              <SelectItem key={type + i} value={type}>
+                {type}
+              </SelectItem>
+            ))}
+          </CustomFormField>
 
-          <CustomFormField
-            fieldType={FormFieldType.CHECKBOX}
-            control={form.control}
-            name="disclosureConsent"
-            label="I consent to the use and disclosure of my health information for treatment purposes."
-          />
+          {/* Insurance Providers Supported (dynamically add by name) */}
+        </section>
 
-          <CustomFormField
-            fieldType={FormFieldType.CHECKBOX}
-            control={form.control}
-            name="privacyConsent"
-            label="I acknowledge that I have reviewed and agree to the privacy policy"
-          />
+        {/* SECURITY AND COMPLIANCE */}
+        <section className="space-y-6">
+          <div className="mb-9 space-y-1">
+            <h2 className="sub-header">Data Privacy Compliance (HIPAA/GDPR)</h2>
+          </div>
+            <CustomFormField
+              fieldType={FormFieldType.CHECKBOX}
+              control={form.control}
+              name="treatmentConsent"
+              label="I confirm this hospital complies with data privacy laws."
+            />
         </section>
 
         <SubmitButton isLoading={isLoading}> Submit and Continue </SubmitButton>
