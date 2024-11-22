@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import Image from "next/image";
+// import Image from "next/image";
 
 import { Form, FormControl } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
@@ -22,7 +22,6 @@ import { SelectItem } from "../ui/select";
 // List of doctors should be fetched from database
 import {
   countries,
-  Doctors,
   GenderOptions,
   HospitalTypes,
   IdentificationTypes,
@@ -355,8 +354,8 @@ const BusinessRegisterForm = () => {
               placeholder="Enter total staff count"
             />
 
-            {/* Doctors */}
-            
+            {/* Add Doctors */}
+
           </div>
         </section>
 
@@ -373,49 +372,49 @@ const BusinessRegisterForm = () => {
             placeholder="Enter emergency contact number"
           />
 
-          {/* PRIMARY CARE PHYSICIAN */}
-          <CustomFormField
-            fieldType={FormFieldType.SELECT}
-            control={form.control}
-            name="primaryPhysician"
-            label="Primary care physician"
-            placeholder="Select a physician"
-          >
-            {Doctors.map((doctor, i) => (
-              <SelectItem key={doctor.name + i} value={doctor.name}>
-                <div className="flex cursor-pointer items-center gap-2">
-                  <Image
-                    src={doctor.image}
-                    width={32}
-                    height={32}
-                    alt="doctor"
-                    className="rounded-full border border-dark-500"
-                  />
-                  <p>{doctor.name}</p>
-                </div>
-              </SelectItem>
-            ))}
-          </CustomFormField>
-
           {/* OPERATING HOURS */}
-          <CustomFormField
+          {/* <CustomFormField
             fieldType={FormFieldType.INPUT}
             control={form.control}
             name="operatingHours"
             label="Operating Hours"
             placeholder="Select operating hours"
-          />
+          /> */}
 
           {/* SERVICES OFFERED (Multi-Select Field) */}
+          <CustomFormField
+            fieldType={FormFieldType.MULTI_CHECKBOX}
+            control={form.control}
+            name="servicesOffered"
+            label="Select the services your hospital provides"
+            options={[
+              { label: "Emergency", value: "emergency" },
+              { label: "OPD", value: "opd" },
+              { label: "In-Patient", value: "in-patient" },
+              { label: "Radiology", value: "radiology" },
+              { label: "Pharmacy", value: "pharmacy" },
+            ]}
+          />
 
           {/* ACCREDITATIONS (Multi-Select Field) */}
+          <CustomFormField
+            fieldType={FormFieldType.MULTI_CHECKBOX}
+            control={form.control}
+            name="accreditations"
+            label="Select accreditations your hospital holds"
+            options={[
+              { label: "JCI Accreditation", value: "jci" },
+              { label: "NABH Accreditation", value: "nabh" },
+              { label: "ISO Certification", value: "iso" },
+            ]}
+          />
 
           {/* LICENSE UPLOAD (File Upload) */}
           <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
-            name="identificationDocument"
-            label="Scanned Copy of Identification Document"
+            name="license"
+            label="Scanned Copy of Operation License"
             renderSkeleton={(field) => (
               <FormControl>
                 <FileUploader files={field.value} onChange={field.onChange} />
@@ -432,19 +431,17 @@ const BusinessRegisterForm = () => {
 
           {/* Insurance Providers Supported (Multi-Select Field) */}
           <CustomFormField
-            fieldType={FormFieldType.SELECT}
+            fieldType={FormFieldType.MULTI_CHECKBOX}
             control={form.control}
             name="paymentMethods"
-            label="Payment Methods"
-            placeholder="Payment Methods Accepted"
-            // Options: Cash, Credit/Debit Card, Online Transfer, Insurance
-          >
-            {IdentificationTypes.map((type, i) => (
-              <SelectItem key={type + i} value={type}>
-                {type}
-              </SelectItem>
-            ))}
-          </CustomFormField>
+            label="Payment Methods Accepted"
+            options={[
+              { label: "Cash", value: "cash" },
+              { label: "Credit/Debit Card", value: "creditOrDebitCard" },
+              { label: "Online Transfer", value: "transfer" },
+              { label: "Insurance", value: "insurance" },
+            ]}
+          />
 
           {/* Insurance Providers Supported (dynamically add by name) */}
         </section>
