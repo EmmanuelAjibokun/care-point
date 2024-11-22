@@ -20,6 +20,7 @@ import { Checkbox } from './ui/checkbox';
 
 export enum FormFieldType {
   INPUT = "input",
+  NUMBER_INPUT = "number",
   TEXTAREA = "textarea",
   SELECT = "select",
   PHONE_INPUT = "phoneInput",
@@ -50,7 +51,7 @@ const RenderField = ({ field, props } : { field: any; props: CustomProps}) => {
         return (
           <div className="flex rounded-md border border-dark-500 bg-dark-400">
             {iconSrc && (
-              <Image 
+              <Image
                 src={iconSrc}
                 height={24}
                 width={24}
@@ -63,6 +64,29 @@ const RenderField = ({ field, props } : { field: any; props: CustomProps}) => {
               <Input 
                 placeholder={placeholder}
                 {...field}
+                className="Shad-input border-0"
+              />
+            </FormControl>
+          </div>
+        )
+      case FormFieldType.NUMBER_INPUT:
+        return (
+          <div className="flex rounded-md border border-dark-500 bg-dark-400">
+            {iconSrc && (
+              <Image
+                src={iconSrc}
+                height={24}
+                width={24}
+                alt={iconAlt || "icon"}
+                className="ml-2"
+              />
+            )}
+
+            <FormControl>
+              <Input 
+                placeholder={placeholder}
+                {...field}
+                type='number'
                 className="Shad-input border-0"
               />
             </FormControl>

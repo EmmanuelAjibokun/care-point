@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Form, FormControl } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import CountryDropdown from "../ui/country-dropdown";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
 import { PatientFormValidation } from "@/lib/validation";
@@ -20,6 +21,7 @@ import { SelectItem } from "../ui/select";
 
 // List of doctors should be fetched from database
 import {
+  countries,
   Doctors,
   GenderOptions,
   HospitalTypes,
@@ -98,6 +100,10 @@ const BusinessRegisterForm = () => {
     setIsLoading(false);
   };
 
+  // const handleCountrySelect = (countryCode: string) => {
+  //   console.log('Selected country code:', countryCode);
+  // };
+
   return (
     <Form {...form}>
       <form
@@ -138,33 +144,33 @@ const BusinessRegisterForm = () => {
 
             {/* TYPE OF HOSPITAL(select field) */}
             <CustomFormField
-            fieldType={FormFieldType.SELECT}
-            control={form.control}
-            name="hospitalType"
-            label="Type of Hospital"
-            placeholder="Select the type of your hospital"
-          >
-            {HospitalTypes.map((type, i) => (
-              <SelectItem key={type + i} value={type}>
-                <div className="flex cursor-pointer items-center gap-2">
-                  <p>{type}</p>
-                </div>
-              </SelectItem>
-            ))}
-          </CustomFormField>
+              fieldType={FormFieldType.SELECT}
+              control={form.control}
+              name="hospitalType"
+              label="Type of Hospital"
+              placeholder="Select the type of your hospital"
+            >
+              {HospitalTypes.map((type, i) => (
+                <SelectItem key={type + i} value={type}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{type}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
 
             {/* HOSPITAL LOGO (file Upload) */}
             <CustomFormField
-            fieldType={FormFieldType.SKELETON}
-            control={form.control}
-            name="logo"
-            label="Hospital Logo (Supported Formats: .jpg, .png, .svg)"
-            renderSkeleton={(field) => (
-              <FormControl>
-                <FileUploader files={field.value} onChange={field.onChange} />
-              </FormControl>
-            )}
-          />
+              fieldType={FormFieldType.SKELETON}
+              control={form.control}
+              name="logo"
+              label="Hospital Logo (Supported Formats: .jpg, .png, .svg)"
+              renderSkeleton={(field) => (
+                <FormControl>
+                  <FileUploader files={field.value} onChange={field.onChange} />
+                </FormControl>
+              )}
+            />
           </div>
 
           {/* BIRTHDATE & GENDER */}
@@ -243,9 +249,24 @@ const BusinessRegisterForm = () => {
             />
 
             {/* COUNTRY (Dropdown/Select Field) */}
+            <CustomFormField
+              fieldType={FormFieldType.SELECT}
+              control={form.control}
+              name="country"
+              label="Country"
+              placeholder="Select your country"
+            >
+              {countries.map((type, i) => (
+                <SelectItem key={type + i} value={type}>
+                  <div className="flex cursor-pointer items-center gap-2">
+                    <p>{type}</p>
+                  </div>
+                </SelectItem>
+              ))}
+            </CustomFormField>
 
             <CustomFormField
-              fieldType={FormFieldType.PHONE_INPUT}
+              fieldType={FormFieldType.NUMBER_INPUT}
               control={form.control}
               name="postalCode"
               label="Postal Code"
@@ -288,7 +309,7 @@ const BusinessRegisterForm = () => {
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
-              name="websiteUrl"
+              name="websiteUrl" // Optional
               label="Website URL"
               placeholder="Enter website URL"
             />
@@ -302,7 +323,6 @@ const BusinessRegisterForm = () => {
           </div>
 
           <div className="flex flex-col gap-6 xl:flex-row">
-
             <CustomFormField
               fieldType={FormFieldType.INPUT}
               control={form.control}
@@ -320,7 +340,7 @@ const BusinessRegisterForm = () => {
             />
 
             <CustomFormField
-              fieldType={FormFieldType.INPUT}
+              fieldType={FormFieldType.NUMBER_INPUT}
               control={form.control}
               name="numberOfDepartments"
               label="Number of Departments"
@@ -328,7 +348,7 @@ const BusinessRegisterForm = () => {
             />
 
             <CustomFormField
-              fieldType={FormFieldType.INPUT}
+              fieldType={FormFieldType.NUMBER_INPUT}
               control={form.control}
               name="numberOfStaff"
               label="Number of Staff Members"
@@ -337,7 +357,6 @@ const BusinessRegisterForm = () => {
 
             {/* Doctors */}
             
-
           </div>
         </section>
 
@@ -347,12 +366,12 @@ const BusinessRegisterForm = () => {
           </div>
 
           <CustomFormField
-              fieldType={FormFieldType.PHONE_INPUT}
-              control={form.control}
-              name="emergencyContact"
-              label="Emergency Contact"
-              placeholder="Enter emergency contact number"
-            />
+            fieldType={FormFieldType.PHONE_INPUT}
+            control={form.control}
+            name="emergencyContact"
+            label="Emergency Contact"
+            placeholder="Enter emergency contact number"
+          />
 
           {/* PRIMARY CARE PHYSICIAN */}
           <CustomFormField
@@ -386,7 +405,7 @@ const BusinessRegisterForm = () => {
             label="Operating Hours"
             placeholder="Select operating hours"
           />
-          
+
           {/* SERVICES OFFERED (Multi-Select Field) */}
 
           {/* ACCREDITATIONS (Multi-Select Field) */}
@@ -403,7 +422,6 @@ const BusinessRegisterForm = () => {
               </FormControl>
             )}
           />
-
         </section>
 
         {/* PAYMENT & INSURANCE */}
@@ -436,12 +454,12 @@ const BusinessRegisterForm = () => {
           <div className="mb-9 space-y-1">
             <h2 className="sub-header">Data Privacy Compliance (HIPAA/GDPR)</h2>
           </div>
-            <CustomFormField
-              fieldType={FormFieldType.CHECKBOX}
-              control={form.control}
-              name="treatmentConsent"
-              label="I confirm this hospital complies with data privacy laws."
-            />
+          <CustomFormField
+            fieldType={FormFieldType.CHECKBOX}
+            control={form.control}
+            name="treatmentConsent"
+            label="I confirm this hospital complies with data privacy laws."
+          />
         </section>
 
         <SubmitButton isLoading={isLoading}> Submit and Continue </SubmitButton>
