@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from 'tailwindcss-animate';
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
-const { fontFamily } = require("tailwindcss/defaultTheme");
 
 const config = {
   darkMode: ["class"],
@@ -45,6 +46,7 @@ const config = {
           600: "#76828D",
           700: "#ABB8C4",
         },
+        'custom-gray': '#5A5A5A',
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
@@ -75,7 +77,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;
 
 export default config;

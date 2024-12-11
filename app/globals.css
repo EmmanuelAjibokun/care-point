@@ -292,7 +292,7 @@
   }
 
   .nav-list {
-    @apply flex space-x-6;
+    @apply hidden lg:flex space-x-6;
   }
 
   .nav-item {
@@ -322,7 +322,10 @@
   }
 
   .footer-text {
-    @apply text-center text-sm text-gray-500;
+    @apply text-center text-sm text-custom-gray;
+  }
+  .ham {
+    @apply block w-6 h-0.5 transition-all duration-300 bg-light-200;
   }
 }
 

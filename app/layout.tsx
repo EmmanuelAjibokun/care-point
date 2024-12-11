@@ -29,11 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn("min-h-screen bg-dark-300 font-sans antialiased", fontSans.variable)}
+        className={cn("min-h-screen bg-light-200 dark:bg-dark-300 font-sans antialiased", fontSans.variable)}
       >
         <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >

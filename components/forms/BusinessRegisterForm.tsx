@@ -24,7 +24,6 @@ import {
   countries,
   GenderOptions,
   HospitalTypes,
-  IdentificationTypes,
   PatientFormDefaultValues,
 } from "@/constants";
 import FileUploader from "../FileUploader";
