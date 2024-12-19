@@ -89,7 +89,7 @@ const Home = () => {
           <h2 className="header mb-4">
             Modern Patient Management at Your Fingertips
           </h2>
-          <p className="#5A5A5A mb-6">
+          <p className="text-custom-gray mb-6">
             Streamline your healthcare operations with CarePoint. Manage patient
             profiles, schedules, and analytics, all in one place.
           </p>
