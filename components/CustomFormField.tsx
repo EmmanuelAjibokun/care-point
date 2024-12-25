@@ -90,7 +90,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.NUMBER_INPUT:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        <div className="flex rounded-md border border-light-200 bg-green-100">
           {iconSrc && (
             <Image
               src={iconSrc}
@@ -127,7 +127,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       );
     case FormFieldType.DATE_PICKER:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        <div className="flex rounded-md border border-light-200 bg-green-100">
           <Image
             src="/assets/icons/calendar.svg"
             height={24}
@@ -154,9 +154,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         <FormControl>
           <Select onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
-              <SelectTrigger className="shad-select-trigger">
+                <SelectTrigger className="shad-select-trigger">
                 <SelectValue placeholder={placeholder} />
-              </SelectTrigger>
+                </SelectTrigger>
             </FormControl>
 
             <SelectContent className="shad-select-content">

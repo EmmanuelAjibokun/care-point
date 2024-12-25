@@ -110,7 +110,7 @@ const BusinessRegisterForm = () => {
       >
         <section className="space-y-4">
           <h1 className="header">Welcome 👋</h1>
-          <p className="text-dark-700">Tell us about your Company</p>
+          <p className="text-custom-gray">Tell us about your Company</p>
         </section>
 
         {/* BASIC INFORMATION */}
