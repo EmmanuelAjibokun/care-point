@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Control } from "react-hook-form";
 import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
 // import { FormFieldType } from "./forms/PatientForm";
 import PhoneInput from "react-phone-number-input";
@@ -26,9 +27,10 @@ export enum FormFieldType {
   PHONE_INPUT = "phoneInput",
   CHECKBOX = "checkbox",
   DATE_PICKER = "datePicker",
+  TIME_PICKER = "timePicker",
   SKELETON = "skeleton",
   MULTI_CHECKBOX = "multiCheckbox",
-  TAG_INPUT = "tag_input",
+  TAG_INPUT = "tagInput",
 }
 
 type option = {
@@ -199,6 +201,30 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               timeInputLabel="Time:"
               wrapperClassName="data-picker"
             />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.TIME_PICKER:
+      return (
+        <div className="flex rounded-md border border-light-200 bg-green-100 text-custom-gray">
+          <FormControl>
+            <div className="flex items-center gap-4">
+              {options?.map((option) => (
+                <div key={option.label} className="flex">
+                  <span>{option?.value}:&emsp;</span>
+                  <TimePicker
+                    value={field.value}
+                    onChange={(time) => field.onChange(time)}
+                    clockIcon={null}
+                    clearIcon={null}
+                    // dateFormat={dateFormat ?? "MM/dd/yyyy"}
+                    // showTimeSelect={showTimeSelect ?? false}
+                    // timeInputLabel="Time:"
+                    className="data-picker"
+                  />
+                </div>
+              ))}
+            </div>
           </FormControl>
         </div>
       );

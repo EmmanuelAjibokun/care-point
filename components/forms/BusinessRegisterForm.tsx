@@ -394,13 +394,17 @@ const BusinessRegisterForm = () => {
           />
 
           {/* OPERATING HOURS */}
-          {/* <CustomFormField
-            fieldType={FormFieldType.INPUT}
+          <CustomFormField
+            fieldType={FormFieldType.TIME_PICKER}
             control={form.control}
             name="operatingHours"
             label="Operating Hours"
             placeholder="Select operating hours"
-          /> */}
+            options={[
+              { label: "openingTime", value: "Opening Time" },
+              { label: "closingTime", value: "Closing Time" },
+            ]}
+          />
 
           {/* SERVICES OFFERED (Multi-Select Field) */}
           <CustomFormField
@@ -450,7 +454,7 @@ const BusinessRegisterForm = () => {
             <h2 className="sub-header">Payment & Insurance</h2>
           </div>
 
-          {/* Insurance Providers Supported (Multi-Select Field) */}
+          {/* PAYMENT METHODS (Multi-Select Field) */}
           <CustomFormField
             fieldType={FormFieldType.MULTI_CHECKBOX}
             control={form.control}

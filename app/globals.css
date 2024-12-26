@@ -342,10 +342,18 @@
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker-time__header {
+  background-color: #fff !important;
+  border-color: #363a3d !important;
+  color: #1a1d21 !important;
+}
+
+.react-time-picker__inputGroup__input {
   background-color: transparent !important;
   border-color: #363a3d !important;
-  color: #abb8c4 !important;
+  color: #5A5A5A !important;
+  
 }
+
 border-light-200 
 .react-datepicker__current-month,
 .react-datepicker__day-name,
