@@ -28,6 +28,7 @@ export enum FormFieldType {
   DATE_PICKER = "datePicker",
   SKELETON = "skeleton",
   MULTI_CHECKBOX = "multiCheckbox",
+  TAG_INPUT = "tag_input",
 }
 
 type option = {
@@ -47,6 +48,9 @@ interface CustomProps {
   dateFormat?: string;
   showTimeSelect?: boolean;
   options?: option[];
+  tags?: string[];
+  removeTag?: (indexToRemove: number) => void;
+  setTags?: (tags: string[]) => void;
   children?: React.ReactNode;
   renderSkeleton?: (field: any) => React.ReactNode;
 }
@@ -64,6 +68,9 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
     showTimeSelect,
     renderSkeleton,
     options,
+    tags,
+    removeTag,
+    setTags,
   } = props;
   switch (fieldType) {
     case FormFieldType.INPUT:
@@ -86,6 +93,54 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
               className="Shad-input border-0"
             />
           </FormControl>
+        </div>
+      );
+    case FormFieldType.TAG_INPUT:
+      return (
+        <div className="input-text-wrapper">
+          <div className="tags-input">
+            <div className="tags">
+              <ul className="tags-list">
+                {tags?.map((tag, index) => (
+                  <li className="tags-item" key={index}>
+                    <div className="input-tag">
+                      <span className="tag-text">{tag}</span>
+                      <button
+                        type="button"
+                        className="input-tag-delete-button"
+                        onClick={() => removeTag && removeTag(index)}
+                        aria-label={`delete ${tag} tag`}
+                      >
+                        <span className="icon-x" aria-hidden="true">x</span>
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <FormControl>
+              <input
+                id="elements"
+                type="text"
+                className="tags-input-text"
+                placeholder={placeholder}
+                value={field.value}
+                onChange={field.onChange}
+                onKeyDown={e => {
+                  if (e.key === "Enter" && field.value.trim() !== "") {
+                    if (!tags?.includes(field.value)) {
+                      if (setTags) {
+
+                        const newTags = [...(tags || []), field.value];
+                        setTags(newTags);
+                      }
+                    }
+                    field.onChange("");
+                }}}
+              />
+            </FormControl>
+          </div>
         </div>
       );
     case FormFieldType.NUMBER_INPUT:

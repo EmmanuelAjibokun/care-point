@@ -413,3 +413,72 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+
+/* =====  TAGS INPUT */
+.input-text-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.tags-input {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tags-item {
+  display: flex;
+  align-items: center;
+  background: #f3f3f3;
+  margin: 4px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #333;
+}
+
+.tags-item .input-tag {
+  display: flex;
+  align-items: center;
+}
+
+.tags-item .tag-text {
+  margin-right: 8px;
+}
+
+.input-tag-delete-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #888;
+  cursor: pointer;
+}
+
+.input-tag-delete-button:hover {
+  color: #f44336;
+}
+
+.tags-input-text {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 6px;
+  font-size: 14px;
+  margin: 4px;
+}

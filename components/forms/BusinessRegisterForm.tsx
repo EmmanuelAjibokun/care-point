@@ -32,6 +32,8 @@ import FileUploader from "../FileUploader";
 const BusinessRegisterForm = () => {
   // const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState("");
 
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
@@ -101,6 +103,21 @@ const BusinessRegisterForm = () => {
   // const handleCountrySelect = (countryCode: string) => {
   //   console.log('Selected country code:', countryCode);
   // };
+
+  // Add a tag
+  // const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter" && inputValue.trim() !== "") {
+  //     if (!tags.includes(inputValue)) {
+  //       setTags((prevTags) => [...prevTags, inputValue]);
+  //     }
+  //     setInputValue("");
+  //   }
+  // }
+
+  // Remove a tag
+  const removeTag = (indexToRemove: number) => {
+    setTags((prevTags) => prevTags.filter((_, index) => index !== indexToRemove));
+  }
 
   return (
     <Form {...form}>
@@ -353,8 +370,7 @@ const BusinessRegisterForm = () => {
               placeholder="Enter total staff count"
             />
 
-            {/* Add Doctors */}
-
+            {/* Add Doctors: pop-up modal */}
           </div>
         </section>
 
@@ -442,7 +458,53 @@ const BusinessRegisterForm = () => {
             ]}
           />
 
-          {/* Insurance Providers Supported (dynamically add by name) */}
+          {/* Insurance Providers Supported (dynamically add by name): Tags Input */}
+          <CustomFormField
+            fieldType={FormFieldType.TAG_INPUT}
+            control={form.control}
+            name="insuranceProviders"
+            label="Accepted Insurance Providers"
+            placeholder="Enter insurance provider name"
+            tags={tags}
+            setTags={setTags}
+            removeTag={removeTag}
+            />
+
+          {/* <div className="input-text-wrapper">
+            <div className="tags-input">
+              <div className="tags">
+                <ul className="tags-list">
+                  {tags.map((tag, index) => (
+                    <li className="tags-item" key={index}>
+                      <div className="input-tag">
+                        <span className="tag-text">{tag}</span>
+                        <button
+                          type="button"
+                          className="input-tag-delete-button"
+                          onClick={() => removeTag(index)}
+                          aria-label={`delete ${tag} tag`}
+                        >
+                          <span className="icon-x" aria-hidden="true">
+                            x
+                          </span>
+                        </button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <input
+                id="elements"
+                type="text"
+                className="tags-input-text"
+                placeholder="Add Insurance Provider here"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyDown={addTag}
+              />
+            </div>
+          </div> */}
         </section>
 
         {/* SECURITY AND COMPLIANCE */}
