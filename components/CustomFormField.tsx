@@ -209,21 +209,24 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         <div className="flex rounded-md border border-light-200 bg-green-100 text-custom-gray">
           <FormControl>
             <div className="flex items-center gap-4">
-              {options?.map((option) => (
+                {options?.map((option, index) => (
                 <div key={option.label} className="flex">
                   <span>{option?.value}:&emsp;</span>
                   <TimePicker
-                    value={field.value}
-                    onChange={(time) => field.onChange(time)}
-                    clockIcon={null}
-                    clearIcon={null}
-                    // dateFormat={dateFormat ?? "MM/dd/yyyy"}
-                    // showTimeSelect={showTimeSelect ?? false}
-                    // timeInputLabel="Time:"
-                    className="data-picker"
+                  id={option.value}
+                  value={field.value?.[index] || ""}
+                  onChange={(time) => {
+                    const updatedValues = [...(field.value || [])];
+                    updatedValues[index] = time;
+                    console.log(time)
+                    field.onChange(updatedValues);
+                  }}
+                  clockIcon={null}
+                  clearIcon={null}
+                  className="data-picker"
                   />
                 </div>
-              ))}
+                ))}
             </div>
           </FormControl>
         </div>
