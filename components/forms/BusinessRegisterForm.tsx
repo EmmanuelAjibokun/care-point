@@ -5,8 +5,6 @@ import { useForm } from "react-hook-form";
 // import Image from "next/image";
 
 import { Form, FormControl } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 // import CountryDropdown from "../ui/country-dropdown";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
@@ -22,7 +20,6 @@ import { SelectItem } from "../ui/select";
 // List of doctors should be fetched from database
 import {
   countries,
-  GenderOptions,
   HospitalTypes,
   PatientFormDefaultValues,
 } from "@/constants";
@@ -33,12 +30,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
+
 import DoctorForm from "./DoctorForm";
 
 const BusinessRegisterForm = () => {
@@ -208,38 +204,13 @@ const BusinessRegisterForm = () => {
             />
           </div>
 
-          {/* BIRTHDATE & GENDER */}
+          {/* FOUNDING DATE */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
               fieldType={FormFieldType.DATE_PICKER}
               control={form.control}
-              name="birthDate"
-              label="Date of birth"
-            />
-
-            <CustomFormField
-              fieldType={FormFieldType.SKELETON}
-              control={form.control}
-              name="gender"
-              label="Gender"
-              renderSkeleton={(field) => (
-                <FormControl>
-                  <RadioGroup
-                    className="flex h-11 gap-6 xl:justify-between"
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    {GenderOptions.map((option, i) => (
-                      <div key={option + i} className="radio-group">
-                        <RadioGroupItem value={option} id={option} />
-                        <Label htmlFor={option} className="cursor-pointer">
-                          {option}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </FormControl>
-              )}
+              name="foundingDate"
+              label="Founding Date"
             />
           </div>
         </section>
@@ -388,6 +359,14 @@ const BusinessRegisterForm = () => {
               name="numberOfStaff"
               label="Number of Staff Members"
               placeholder="Enter total staff count"
+            />
+
+            <CustomFormField
+              fieldType={FormFieldType.NUMBER_INPUT}
+              control={form.control}
+              name="passcode"
+              label="Passcode"
+              placeholder="Enter preferred passcode: kindly take note of this"
             />
 
             {/* Add Doctors: pop-up modal */}
