@@ -29,6 +29,18 @@ import {
 import FileUploader from "../FileUploader";
 // import { registerPatient } from "@/lib/actions/patient.actions";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "../ui/button";
+import DoctorForm from "./DoctorForm";
+
 const BusinessRegisterForm = () => {
   // const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +50,7 @@ const BusinessRegisterForm = () => {
     if (e.key === "Enter") {
       e.preventDefault();
     }
-  }
+  };
 
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
@@ -121,8 +133,10 @@ const BusinessRegisterForm = () => {
 
   // Remove a tag
   const removeTag = (indexToRemove: number) => {
-    setTags((prevTags) => prevTags.filter((_, index) => index !== indexToRemove));
-  }
+    setTags((prevTags) =>
+      prevTags.filter((_, index) => index !== indexToRemove)
+    );
+  };
 
   return (
     <Form {...form}>
@@ -377,6 +391,17 @@ const BusinessRegisterForm = () => {
             />
 
             {/* Add Doctors: pop-up modal */}
+            <Dialog>
+              <DialogTrigger className="hover:text-green-500">Add Doctor +</DialogTrigger>
+              <DialogContent className="shad-dialog">
+                <DialogHeader>
+                  <DialogTitle>Kindly add the details of your doctors</DialogTitle>
+                  <DialogDescription>
+                    <DoctorForm/>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           </div>
         </section>
 
@@ -478,7 +503,7 @@ const BusinessRegisterForm = () => {
             tags={tags}
             setTags={setTags}
             removeTag={removeTag}
-            />
+          />
 
           {/* <div className="input-text-wrapper">
             <div className="tags-input">
