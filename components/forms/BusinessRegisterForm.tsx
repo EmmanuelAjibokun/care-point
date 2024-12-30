@@ -166,7 +166,7 @@ const BusinessRegisterForm = () => {
           {/* REGISTRATION NUMBER */}
           <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
-              fieldType={FormFieldType.PHONE_INPUT}
+              fieldType={FormFieldType.INPUT}
               control={form.control}
               name="registrationNumber"
               label="Registration Number"
