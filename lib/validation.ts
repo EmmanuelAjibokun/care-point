@@ -1,3 +1,5 @@
+// import { count } from "console";
+// import { stat } from "fs";
 import { z } from "zod";
 
 export const UserFormValidation = z.object({
@@ -74,6 +76,94 @@ export const PatientFormValidation = z.object({
     .refine((value) => value === true, {
       message: "You must consent to privacy in order to proceed",
     }),
+});
+
+export const DoctorFormValidation = z.object({
+  hospitalName: z
+    .string()
+    .min(2, "Hospital name must be at least 2 characters")
+    .max(100, "Hospital name must be at most 100 characters"),
+  registrationNumber: z
+    .string()
+    .min(2, "Registration number must be at least 2 characters")
+    .max(50, "Registration number must be at most 50 characters"),
+  hospitalType: z
+    .string()
+    .min(2, "Select a hospital type"),
+  hospitalLogo: z.custom<File[]>().optional(),
+  email: z.string().email("Invalid email address"),
+  foundingDate: z.coerce.date(),
+  address1: z
+  .string()
+  .min(5, "Address must be at least 5 characters")
+  .max(500, "Address must be at most 500 characters"),
+  address2: z.string().optional(),
+  city: z.string().min(2, "City name required"),
+  stateOrProvince: z.string().min(2, "State/Province required"),
+  country: z.string().min(2, "Country required"),
+  postalCode: z
+    .string()
+    .min(4, "Invalid postal code")
+    .max(10, "Invalid postal code"),
+  primaryContactNumber: z
+    .string()
+    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+  secondaryContactNumber: z
+    .string()
+    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+  websiteUrl: z
+    .string()
+    .url("Invalid website URL"),
+  adminName: z
+    .string()
+    .min(2, "Contact name must be at least 2 characters")
+    .max(100, "Contact name must be at most 100 characters"),
+  adminContactNumber: z
+    .string()
+    .refine(
+      (adminNumber) => /^\+\d{10,15}$/.test(adminNumber),
+      "Invalid phone number"
+    ),
+  emergencyContact: z
+    .string()
+    .refine(
+      (val) => /^\+\d{10,15}$/.test(val),
+      "Invalid phone number"
+    ),
+  numberOfDepartments: z
+    .string()
+    .min(1, "Number of departments must be at least 1"),
+  numberOfStaff: z
+    .string()
+    .min(1, "Number of staff required"),
+  passcode: z
+  .string()
+  .min(6, "Has to be exactly 6 characters")
+  .max(6, "Has to be exactly 6 characters"),
+  openingTime: z.string().min(1, "Opening time required"),
+  closingTime: z.string().min(1, "Closing time required"),
+  
+  // Arrays for multiple selections (checkbox groups)
+  servicesOffered: z
+    .array(z.string())
+    .min(1, "Select at least one service"),
+  accreditations: z
+    .array(z.string())
+    .optional(),
+  licenseDocument: z.custom<File[]>().optional(),
+  doctorsId: z.array(z.string()),
+
+  // Arrays for checkbox groups
+  paymentMethods: z
+    .array(z.string())
+    .min(1, "Select at least one payment method"),
+    
+  insuranceProviders: z
+    .array(z.string())
+    .optional(),
+  dataPrivacyCompliance: z
+  .boolean()
+  .refine((val) => val === true, "You must agree to data privacy compliance"),
 });
 
 export const CreateAppointmentSchema = z.object({

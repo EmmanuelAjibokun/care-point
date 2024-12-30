@@ -529,7 +529,7 @@ const BusinessRegisterForm = () => {
           <CustomFormField
             fieldType={FormFieldType.CHECKBOX}
             control={form.control}
-            name="treatmentConsent"
+            name="dataPrivacyCompliance"
             label="I confirm this hospital complies with data privacy laws."
           />
         </section>
