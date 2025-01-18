@@ -42,6 +42,7 @@ const BusinessRegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [open, setOpen] = useState(false);
+  const [doctorsList, setDoctorsList] = useState<DoctorParams[]>([]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === "Enter") {
@@ -58,16 +59,13 @@ const BusinessRegisterForm = () => {
 
   // 2. Define a submit handler.
   const onSubmit = async (values: z.infer<typeof BusinessFormValidation>) => {
-    console.log("Triggered")
+    console.log("Triggered");
     setIsLoading(true);
 
     // Store file info in form data as
     let logoData;
     let licenseData;
-    if (
-      values.hospitalLogo &&
-      values.hospitalLogo?.length > 0
-    ) {
+    if (values.hospitalLogo && values.hospitalLogo?.length > 0) {
       const blobFile = new Blob([values.hospitalLogo[0]], {
         type: values.hospitalLogo[0].type,
       });
@@ -76,10 +74,7 @@ const BusinessRegisterForm = () => {
       logoData.append("blobFile", blobFile);
       logoData.append("fileName", values.hospitalLogo[0].name);
     }
-    if (
-      values.licenseDocument &&
-      values.licenseDocument?.length > 0
-    ) {
+    if (values.licenseDocument && values.licenseDocument?.length > 0) {
       const blobFile = new Blob([values.licenseDocument[0]], {
         type: values.licenseDocument[0].type,
       });
@@ -87,6 +82,10 @@ const BusinessRegisterForm = () => {
       licenseData = new FormData();
       licenseData.append("blobFile", blobFile);
       licenseData.append("fileName", values.licenseDocument[0].name);
+    }
+
+    if (doctorsList) {
+      values.doctorsId = doctorsList.map((doctor) => doctor.$id);
     }
 
     try {
@@ -121,7 +120,7 @@ const BusinessRegisterForm = () => {
         paymentMethods: values.paymentMethods,
         insuranceProviders: [...tags],
         dataPrivacyCompliance: values.dataPrivacyCompliance,
-      }
+      };
 
       console.log("New Hospital:", hospital);
       // const patient = {
@@ -426,20 +425,36 @@ const BusinessRegisterForm = () => {
               placeholder="Enter preferred passcode: kindly take note of this"
             />
 
-            {/* Add Doctors: pop-up modal */}
-            {/* Doctors List */}
-            <div></div>
-            <Dialog open={open} onOpenChange={setOpen} >
-              <DialogTrigger className="hover:text-green-500">Add Doctor +</DialogTrigger>
-              <DialogContent className="shad-dialog">
-                <DialogHeader>
-                  <DialogTitle>Kindly add the details of your doctors</DialogTitle>
-                  <DialogDescription>
-                    <DoctorForm setOpen={setOpen} />
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            <div className="flex flex-col xl:flex-row">
+              {/* Add Doctors: pop-up modal */}
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger className="hover:text-green-500">
+                  Add Doctor +
+                </DialogTrigger>
+                <DialogContent className="shad-dialog">
+                  <DialogHeader>
+                    <DialogTitle>
+                      Kindly add the details of your doctors
+                    </DialogTitle>
+                    <DialogDescription>
+                      <DoctorForm
+                        setOpen={setOpen}
+                        setDoctorsList={setDoctorsList}
+                      />
+                    </DialogDescription>
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+
+              {/* Doctors List */}
+              <div>
+                {doctorsList.map((doctor, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <li>{doctor.fullname}</li>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -463,7 +478,6 @@ const BusinessRegisterForm = () => {
             name="openingTime"
             label="Opening Time"
             // placeholder="Select operating hours"
-
           />
           <CustomFormField
             fieldType={FormFieldType.TIME_PICKER}
@@ -471,7 +485,6 @@ const BusinessRegisterForm = () => {
             name="closingTime"
             label="Closing Time"
             // placeholder="Select operating hours"
-
           />
 
           {/* SERVICES OFFERED (Multi-Select Field) */}

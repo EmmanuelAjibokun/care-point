@@ -60,5 +60,11 @@ declare type CreateDoctorParams = {
   email: string;
   phone: string;
 }
+declare type DoctorParams = {
+  $id: string;
+  fullname: string;
+  email: string;
+  phone: string;
+}
 
 declare type E164Number = string;

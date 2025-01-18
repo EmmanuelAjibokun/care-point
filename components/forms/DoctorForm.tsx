@@ -17,9 +17,10 @@ import SubmitButton from "../SubmitButton";
 
 interface DoctorFormProps {
   setOpen: (open: boolean) => void;
+  setDoctorsList: (doctors: Array<DoctorParams>) => void;
 }
 
-const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen }) => {
+const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen, setDoctorsList }) => {
   // const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -41,11 +42,12 @@ const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen }) => {
 
     try {
       const doctorData = { fullname, email, phone }
-      const newDoctor = await registerDoctor(doctorData);
-      console.log("created newDoctor: ", newDoctor)
+      const doctors = await registerDoctor(doctorData);
+      console.log("created doctors: ", doctors)
       setError("")
 
-      if(newDoctor) {
+      if(doctors) {
+        setDoctorsList(doctors)
         setOpen(false)
       }
     } catch (error) {

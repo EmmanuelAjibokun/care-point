@@ -10,15 +10,29 @@ console.log("user")
 // CREATE APPWRITE COLLECTION OF DOCTORS
 export const registerDoctor = async ({ ...doctor }: CreateDoctorParams) => {
   try {
-    const newDoctor = await databases.createDocument(
+    await databases.createDocument(
       process.env.DATABASE_ID!,
       process.env.DOCTOR_COLLECTION_ID!,
       ID.unique(),
       {...doctor}
     )
 
-    console.log("created new doctor")
-    return parseStringify(newDoctor)
+    const doctors = await getDoctors()
+    return doctors
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getDoctors = async () => {
+  try {
+    const doctors = await databases.listDocuments(
+      process.env.DATABASE_ID!,
+      process.env.DOCTOR_COLLECTION_ID!,
+    )
+    if (doctors) {
+      return parseStringify(doctors.documents)
+    }
   } catch (error) {
     console.log(error)
   }
