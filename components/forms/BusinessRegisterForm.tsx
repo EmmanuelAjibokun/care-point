@@ -8,7 +8,7 @@ import { Form, FormControl } from "@/components/ui/form";
 // import CountryDropdown from "../ui/country-dropdown";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
-import { PatientFormValidation } from "@/lib/validation";
+import { BusinessFormValidation } from "@/lib/validation";
 import { z } from "zod";
 // import { useRouter } from "next/navigation";
 // import { createUser } from "@/lib/actions/patient.actions";
@@ -21,7 +21,7 @@ import { SelectItem } from "../ui/select";
 import {
   countries,
   HospitalTypes,
-  PatientFormDefaultValues,
+  BusinessFormDefaultValues,
 } from "@/constants";
 import FileUploader from "../FileUploader";
 // import { registerPatient } from "@/lib/actions/patient.actions";
@@ -48,36 +48,81 @@ const BusinessRegisterForm = () => {
     }
   };
 
-  const form = useForm<z.infer<typeof PatientFormValidation>>({
-    resolver: zodResolver(PatientFormValidation),
+  const form = useForm<z.infer<typeof BusinessFormValidation>>({
+    resolver: zodResolver(BusinessFormValidation),
     defaultValues: {
-      ...PatientFormDefaultValues,
-      name: "",
-      email: "",
-      phone: "",
+      ...BusinessFormDefaultValues,
     },
   });
 
   // 2. Define a submit handler.
-  const onSubmit = async (values: z.infer<typeof PatientFormValidation>) => {
+  const onSubmit = async (values: z.infer<typeof BusinessFormValidation>) => {
+    console.log("Triggered")
     setIsLoading(true);
 
     // Store file info in form data as
-    let formData;
+    let logoData;
+    let licenseData;
     if (
-      values.identificationDocument &&
-      values.identificationDocument?.length > 0
+      values.hospitalLogo &&
+      values.hospitalLogo?.length > 0
     ) {
-      const blobFile = new Blob([values.identificationDocument[0]], {
-        type: values.identificationDocument[0].type,
+      const blobFile = new Blob([values.hospitalLogo[0]], {
+        type: values.hospitalLogo[0].type,
       });
 
-      formData = new FormData();
-      formData.append("blobFile", blobFile);
-      formData.append("fileName", values.identificationDocument[0].name);
+      logoData = new FormData();
+      logoData.append("blobFile", blobFile);
+      logoData.append("fileName", values.hospitalLogo[0].name);
+    }
+    if (
+      values.licenseDocument &&
+      values.licenseDocument?.length > 0
+    ) {
+      const blobFile = new Blob([values.licenseDocument[0]], {
+        type: values.licenseDocument[0].type,
+      });
+
+      licenseData = new FormData();
+      licenseData.append("blobFile", blobFile);
+      licenseData.append("fileName", values.licenseDocument[0].name);
     }
 
     try {
+      const hospital = {
+        hospitalName: values.hospitalName,
+        registrationNumber: values.registrationNumber,
+        hospitalType: values.hospitalType,
+        foundingDate: new Date(values.foundingDate),
+        address1: values.address1,
+        address2: values.address2,
+        city: values.city,
+        stateOrProvince: values.stateOrProvince,
+        country: values.country,
+        postalCode: values.postalCode,
+        primaryContactNumber: values.primaryContactNumber,
+        secondaryContactNumber: values.secondaryContactNumber,
+        email: values.email,
+        websiteUrl: values.websiteUrl,
+        adminName: values.adminName,
+        adminContactNumber: values.adminContactNumber,
+        emergencyContact: values.emergencyContact,
+        numberOfDepartments: values.numberOfDepartments,
+        numberOfStaff: values.numberOfStaff,
+        passcode: values.passcode,
+        openingTime: values.openingTime,
+        closingTime: values.closingTime,
+        servicesOffered: values.servicesOffered,
+        accreditations: values.accreditations,
+        logo: logoData ? logoData : undefined,
+        license: licenseData ? licenseData : undefined,
+        doctorsId: values.doctorsId,
+        paymentMethods: values.paymentMethods,
+        insuranceProviders: [...tags],
+        dataPrivacyCompliance: values.dataPrivacyCompliance,
+      }
+
+      console.log("New Hospital:", hospital);
       // const patient = {
       //   name: values.name,
       //   email: values.email,
@@ -113,6 +158,12 @@ const BusinessRegisterForm = () => {
     setIsLoading(false);
   };
 
+  // const onSubmit = () => {
+  //   console.log("clicked")
+  //   setIsLoading(false)
+  //   return
+  // }
+
   // const handleCountrySelect = (countryCode: string) => {
   //   console.log('Selected country code:', countryCode);
   // };
@@ -134,13 +185,18 @@ const BusinessRegisterForm = () => {
     );
   };
 
+  // const {watch} = form;
+  // const formValues = watch();
+
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
+        // onSubmit={onSubmit}
         onKeyDown={handleKeyDown}
         className="space-y-12 flex-1"
       >
+        {/* {console.log(formValues)} */}
         <section className="space-y-4">
           <h1 className="header">Welcome 👋</h1>
           <p className="text-custom-gray">Tell us about your Company</p>
@@ -194,7 +250,7 @@ const BusinessRegisterForm = () => {
             <CustomFormField
               fieldType={FormFieldType.SKELETON}
               control={form.control}
-              name="logo"
+              name="hospitalLogo"
               label="Hospital Logo (Supported Formats: .jpg, .png, .svg)"
               renderSkeleton={(field) => (
                 <FormControl>
@@ -370,6 +426,8 @@ const BusinessRegisterForm = () => {
             />
 
             {/* Add Doctors: pop-up modal */}
+            {/* Doctors List */}
+            <div></div>
             <Dialog>
               <DialogTrigger className="hover:text-green-500">Add Doctor +</DialogTrigger>
               <DialogContent className="shad-dialog">
@@ -401,13 +459,18 @@ const BusinessRegisterForm = () => {
           <CustomFormField
             fieldType={FormFieldType.TIME_PICKER}
             control={form.control}
-            name="operatingHours"
-            label="Operating Hours"
-            placeholder="Select operating hours"
-            options={[
-              { label: "openingTime", value: "Opening Time" },
-              { label: "closingTime", value: "Closing Time" },
-            ]}
+            name="openingTime"
+            label="Opening Time"
+            // placeholder="Select operating hours"
+
+          />
+          <CustomFormField
+            fieldType={FormFieldType.TIME_PICKER}
+            control={form.control}
+            name="closingTime"
+            label="Closing Time"
+            // placeholder="Select operating hours"
+
           />
 
           {/* SERVICES OFFERED (Multi-Select Field) */}
@@ -442,7 +505,7 @@ const BusinessRegisterForm = () => {
           <CustomFormField
             fieldType={FormFieldType.SKELETON}
             control={form.control}
-            name="license"
+            name="licenseDocument"
             label="Scanned Copy of Operation License"
             renderSkeleton={(field) => (
               <FormControl>

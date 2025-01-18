@@ -26,11 +26,11 @@ export const PatientFormDefaultValues = {
   privacyConsent: false,
 };
 
-export const DoctorFormDefaultValues = {
+export const BusinessFormDefaultValues = {
   hospitalName: "",
   registrationNumber: "",
   hospitalType: "",
-  hospitalLogo: "",
+  hospitalLogo: [],
   email: "",
   foundingDate: new Date(Date.now()),
   address1: "",
@@ -48,14 +48,14 @@ export const DoctorFormDefaultValues = {
   numberOfDepartments: "",
   numberOfStaff: "",
   passcode: "",
-  openingTime: "Birth Certificate",
+  openingTime: "",
   closingTime: "",
   servicesOffered: [],
   accreditations: [],
-  licenseDocument: "",
+  licenseDocument: [],
   doctorId: [],
   paymentMethods: [],
-  insuranceProviders: [],
+  // insuranceProviders: [],
   dataPrivacyCompliance: false,
 };
 

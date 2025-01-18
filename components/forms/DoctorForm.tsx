@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
-import { UserFormValidation } from "@/lib/validation";
+import { DoctorFormValidation } from "@/lib/validation";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { createUser } from "@/lib/actions/patient.actions";
@@ -20,23 +20,23 @@ const DoctorForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const form = useForm<z.infer<typeof UserFormValidation>>({
-    resolver: zodResolver(UserFormValidation),
+  const form = useForm<z.infer<typeof DoctorFormValidation>>({
+    resolver: zodResolver(DoctorFormValidation),
     defaultValues: {
-      name: "",
+      fullname: "",
       email: "",
       phone: "",
     },
   });
-  console.log("create newUser: ")
+  console.log("create newDoctor: ")
 
   // 2. Define a submit handler.
-  const onSubmit = async ({ name, email, phone }: z.infer<typeof UserFormValidation>) => {
+  const onSubmit = async ({ fullname, email, phone }: z.infer<typeof DoctorFormValidation>) => {
 
     setIsLoading(true);
 
     try {
-      const userData = { name, email, phone }
+      const userData = { fullname, email, phone }
       // console.log(createUser(userData))
       const newUser = await createUser(userData);
       console.log("create newUser: ", newUser)
@@ -65,7 +65,7 @@ const DoctorForm = () => {
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="name"
+          name="fullname"
           label="Full name"
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"

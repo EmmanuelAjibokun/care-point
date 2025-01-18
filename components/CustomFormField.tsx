@@ -133,7 +133,6 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
                   if (e.key === "Enter" && field.value.trim() !== "") {
                     if (!tags?.includes(field.value)) {
                       if (setTags) {
-
                         const newTags = [...(tags || []), field.value];
                         setTags(newTags);
                       }
@@ -208,25 +207,16 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
       return (
         <div className="flex rounded-md border border-light-200 bg-green-100 text-custom-gray">
           <FormControl>
-            <div className="flex items-center gap-4">
-                {options?.map((option, index) => (
-                <div key={option.label} className="flex">
-                  <span>{option?.value}:&emsp;</span>
-                  <TimePicker
-                  id={option.value}
-                  value={field.value?.[index] || ""}
-                  onChange={(time) => {
-                    const updatedValues = [...(field.value || [])];
-                    updatedValues[index] = time;
-                    console.log(time)
-                    field.onChange(updatedValues);
-                  }}
-                  clockIcon={null}
-                  clearIcon={null}
-                  className="data-picker"
-                  />
-                </div>
-                ))}
+            <div  className="flex">
+              {/* <span>{option?.value}:&emsp;</span> */}
+              <TimePicker
+                id={field.value}
+                value={field.value}
+                onChange={field.onChange}
+                clockIcon={null}
+                clearIcon={null}
+                className="data-picker"
+              />
             </div>
           </FormControl>
         </div>

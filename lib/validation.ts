@@ -13,6 +13,17 @@ export const UserFormValidation = z.object({
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
 });
 
+export const DoctorFormValidation = z.object({
+  fullname: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name must be at most 50 characters"),
+  email: z.string().email("Invalid email address"),
+  phone: z
+    .string()
+    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+});
+
 export const PatientFormValidation = z.object({
   name: z
     .string()
@@ -78,7 +89,7 @@ export const PatientFormValidation = z.object({
     }),
 });
 
-export const DoctorFormValidation = z.object({
+export const BusinessFormValidation = z.object({
   hospitalName: z
     .string()
     .min(2, "Hospital name must be at least 2 characters")
@@ -140,8 +151,8 @@ export const DoctorFormValidation = z.object({
   .string()
   .min(6, "Has to be exactly 6 characters")
   .max(6, "Has to be exactly 6 characters"),
-  openingTime: z.string().min(1, "Opening time required"),
-  closingTime: z.string().min(1, "Closing time required"),
+  openingTime: z.string().min(1, "Opening time required").optional(),
+  closingTime: z.string().min(1, "Closing time required").optional(),
   
   // Arrays for multiple selections (checkbox groups)
   servicesOffered: z
@@ -151,16 +162,16 @@ export const DoctorFormValidation = z.object({
     .array(z.string())
     .optional(),
   licenseDocument: z.custom<File[]>().optional(),
-  doctorsId: z.array(z.string()),
+  doctorsId: z.array(z.string()).optional(),
 
   // Arrays for checkbox groups
   paymentMethods: z
     .array(z.string())
     .min(1, "Select at least one payment method"),
     
-  insuranceProviders: z
-    .array(z.string())
-    .optional(),
+  // insuranceProviders: z
+  //   .array(z.string())
+  //   .optional() || z.string().optional,
   dataPrivacyCompliance: z
   .boolean()
   .refine((val) => val === true, "You must agree to data privacy compliance"),

@@ -33,7 +33,7 @@ export const createUser = async (user: CreateUserParams) => {
     }
     console.error("An error occurred while creating a new user", error)
   }
-} 
+}
 
 export const getUser = async (userId: string) => {
   try {
