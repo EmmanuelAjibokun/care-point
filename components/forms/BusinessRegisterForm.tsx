@@ -41,6 +41,7 @@ const BusinessRegisterForm = () => {
   // const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
     if (e.key === "Enter") {
@@ -428,13 +429,13 @@ const BusinessRegisterForm = () => {
             {/* Add Doctors: pop-up modal */}
             {/* Doctors List */}
             <div></div>
-            <Dialog>
+            <Dialog open={open} onOpenChange={setOpen} >
               <DialogTrigger className="hover:text-green-500">Add Doctor +</DialogTrigger>
               <DialogContent className="shad-dialog">
                 <DialogHeader>
                   <DialogTitle>Kindly add the details of your doctors</DialogTitle>
                   <DialogDescription>
-                    <DoctorForm/>
+                    <DoctorForm setOpen={setOpen} />
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>

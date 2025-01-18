@@ -55,4 +55,10 @@ declare type UpdateAppointmentParams = {
   type: string;
 };
 
+declare type CreateDoctorParams = {
+  fullname: string;
+  email: string;
+  phone: string;
+}
+
 declare type E164Number = string;

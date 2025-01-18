@@ -8,15 +8,19 @@ import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
 import { DoctorFormValidation } from "@/lib/validation";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
-import { createUser } from "@/lib/actions/patient.actions";
+// import { useRouter } from "next/navigation";
+import { registerDoctor } from "@/lib/actions/business.actions";
 
 import "react-phone-number-input/style.css";
 import SubmitButton from "../SubmitButton";
 
 
-const DoctorForm = () => {
-  const router = useRouter();
+interface DoctorFormProps {
+  setOpen: (open: boolean) => void;
+}
+
+const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen }) => {
+  // const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,7 +32,7 @@ const DoctorForm = () => {
       phone: "",
     },
   });
-  console.log("create newDoctor: ")
+  // console.log("create newDoctor: ")
 
   // 2. Define a submit handler.
   const onSubmit = async ({ fullname, email, phone }: z.infer<typeof DoctorFormValidation>) => {
@@ -36,23 +40,17 @@ const DoctorForm = () => {
     setIsLoading(true);
 
     try {
-      const userData = { fullname, email, phone }
-      // console.log(createUser(userData))
-      const newUser = await createUser(userData);
-      console.log("create newUser: ", newUser)
+      const doctorData = { fullname, email, phone }
+      const newDoctor = await registerDoctor(doctorData);
+      console.log("created newDoctor: ", newDoctor)
       setError("")
 
-      if(newUser[1]) {
-        router.push(`/patients/${newUser[0].$id}/new-appointment`);
-        return;
-      }
-
-      if(newUser) {
-        router.push(`/patients/${newUser.$id}/register`)
+      if(newDoctor) {
+        setOpen(false)
       }
     } catch (error) {
       console.log(error)
-      setError("Account Registered. Incorrect Email or Phone Number.")
+      // setError("Account Registered. Incorrect Email or Phone Number.")
     }
 
     setIsLoading(false);
@@ -69,7 +67,7 @@ const DoctorForm = () => {
           label="Full name"
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"
-          iconAlt="user"
+          iconAlt="Doctor"
         />
 
         <CustomFormField
