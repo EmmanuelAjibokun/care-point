@@ -84,9 +84,9 @@ const BusinessRegisterForm = () => {
       licenseData.append("fileName", values.licenseDocument[0].name);
     }
 
-    if (doctorsList) {
-      values.doctorsId = doctorsList.map((doctor) => doctor.$id);
-    }
+    // if (doctorsList) {
+    //   values.doctorsId = doctorsList.map((doctor) => doctor.$id);
+    // }
 
     try {
       const hospital = {
@@ -116,7 +116,7 @@ const BusinessRegisterForm = () => {
         accreditations: values.accreditations,
         logo: logoData ? logoData : undefined,
         license: licenseData ? licenseData : undefined,
-        doctorsId: values.doctorsId,
+        doctorsId: [...doctorsList],
         paymentMethods: values.paymentMethods,
         insuranceProviders: [...tags],
         dataPrivacyCompliance: values.dataPrivacyCompliance,
@@ -147,10 +147,11 @@ const BusinessRegisterForm = () => {
       //     : undefined,
       //   privacyConsent: values.privacyConsent,
       // };
-      // const newPatient = await registerPatient(patient);
       // if (newPatient) {
-      //   router.push(`/patients/${user.$id}/new-appointment`);
-      // }
+        //   router.push(`/patients/${user.$id}/new-appointment`);
+        // }
+
+      const newBusiness = await registerPatient(patient);
     } catch (error) {
       console.log(error);
     }

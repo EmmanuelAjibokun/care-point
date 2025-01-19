@@ -67,4 +67,37 @@ declare type DoctorParams = {
   phone: string;
 }
 
+declare type CreateBusinessParams = {
+  hospitalName: string,
+  registrationNumber: string,
+  hospitalType: string,
+  hospitalLogo: FormData | undefined,
+  email: string,
+  foundingDate: string | Date,
+  address1: string,
+  address2: string | undefined,
+  city: string,
+  stateOrProvince: string,
+  country: string,
+  postalCode: string,
+  primaryContactNumber: string,
+  secondaryContactNumber: string | undefined,
+  websiteUrl: string | undefined,
+  adminName: string,
+  adminContactNumber: string,
+  emergencyContact: string,
+  numberOfDepartments: string,
+  numberOfStaff: string,
+  passcode: string,
+  openingTime: string,
+  closingTime: string,
+  servicesOffered: string[],
+  accreditations: string[],
+  licenseDocument: FormData | undefined,
+  doctorId: DoctorParams[],
+  paymentMethods: string[],
+  insuranceProviders: string[],
+  dataPrivacyCompliance: boolean,
+};
+
 declare type E164Number = string;

@@ -121,10 +121,12 @@ export const BusinessFormValidation = z.object({
     .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
   secondaryContactNumber: z
     .string()
-    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number"),
+    .refine((phone) => /^\+\d{10,15}$/.test(phone), "Invalid phone number")
+    .optional(),
   websiteUrl: z
     .string()
-    .url("Invalid website URL"),
+    .url("Invalid website URL")
+    .optional(),
   adminName: z
     .string()
     .min(2, "Contact name must be at least 2 characters")
