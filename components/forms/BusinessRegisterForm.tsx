@@ -24,7 +24,7 @@ import {
   BusinessFormDefaultValues,
 } from "@/constants";
 import FileUploader from "../FileUploader";
-// import { registerPatient } from "@/lib/actions/patient.actions";
+import { registerBusiness } from "@/lib/actions/business.actions";
 
 import {
   Dialog,
@@ -114,8 +114,8 @@ const BusinessRegisterForm = () => {
         closingTime: values.closingTime,
         servicesOffered: values.servicesOffered,
         accreditations: values.accreditations,
-        logo: logoData ? logoData : undefined,
-        license: licenseData ? licenseData : undefined,
+        hospitalLogo: logoData ? logoData : undefined,
+        licenseDocument: licenseData ? licenseData : undefined,
         doctorsId: [...doctorsList],
         paymentMethods: values.paymentMethods,
         insuranceProviders: [...tags],
@@ -123,35 +123,11 @@ const BusinessRegisterForm = () => {
       };
 
       console.log("New Hospital:", hospital);
-      // const patient = {
-      //   name: values.name,
-      //   email: values.email,
-      //   phone: values.phone,
-      //   birthDate: new Date(values.birthDate),
-      //   gender: values.gender,
-      //   address: values.address,
-      //   occupation: values.occupation,
-      //   emergencyContactName: values.emergencyContactName,
-      //   emergencyContactNumber: values.emergencyContactNumber,
-      //   primaryPhysician: values.primaryPhysician,
-      //   insuranceProvider: values.insuranceProvider,
-      //   insurancePolicyNumber: values.insurancePolicyNumber,
-      //   allergies: values.allergies,
-      //   currentMedication: values.currentMedication,
-      //   familyMedicalHistory: values.familyMedicalHistory,
-      //   pastMedicalHistory: values.pastMedicalHistory,
-      //   identificationType: values.identificationType,
-      //   identificationNumber: values.identificationNumber,
-      //   identificationDocument: values.identificationDocument
-      //     ? formData
-      //     : undefined,
-      //   privacyConsent: values.privacyConsent,
-      // };
-      // if (newPatient) {
-        //   router.push(`/patients/${user.$id}/new-appointment`);
-        // }
 
-      const newBusiness = await registerPatient(patient);
+
+      const newBusiness = await registerBusiness(hospital);
+
+      console.log("Newly registered Business:", newBusiness);
     } catch (error) {
       console.log(error);
     }

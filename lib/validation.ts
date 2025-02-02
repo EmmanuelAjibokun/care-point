@@ -161,8 +161,7 @@ export const BusinessFormValidation = z.object({
     .array(z.string())
     .min(1, "Select at least one service"),
   accreditations: z
-    .array(z.string())
-    .optional(),
+    .array(z.string()),
   licenseDocument: z.custom<File[]>().optional(),
   doctorsId: z.array(z.string()).optional(),
 
