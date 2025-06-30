@@ -70,13 +70,16 @@ export const updateAppointment = async ({
 }
 
 // Get recent Appointment List
-export const getRecentAppointmentList = async () => {
+export const getRecentAppointmentList = async (hospitalId: string) => {
+  console.log(hospitalId)
   try {
     const appointments = await databases.listDocuments(
       process.env.DATABASE_ID!,
       process.env.APPOINTMENT_COLLECTION_ID!,
       [Query.orderDesc("$createdAt")]
     )
+
+    // Filter appointments.documents to get appointments from a specific hospital ID
 
     const initialCounts = {
       scheduledCount: 0,

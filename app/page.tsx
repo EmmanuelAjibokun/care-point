@@ -112,7 +112,7 @@ const Home = () => {
 
       {/* Footer */}
       <footer className="footer-container">
-        <p className="footer-text">© 2024 CarePoint. All Rights Reserved.</p>
+        <p className="footer-text">© 2025 CarePoint. All Rights Reserved.</p>
       </footer>
     </div>
 

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-
 import { ID } from "node-appwrite"
 import { databases, storage } from "../appwrite.config"
 import { parseStringify } from "../utils";
@@ -20,7 +19,9 @@ export const registerDoctor = async ({ ...doctor }: CreateDoctorParams) => {
     )
 
     const doctors = await getDoctors()
-    return doctors
+    // filter out the newly created doctor
+    const newDoctor = doctors.filter((doc: any) => doc.email === doctor.email)
+    return newDoctor[0]
   } catch (error) {
     console.log(error)
   }

@@ -94,7 +94,7 @@ declare type CreateBusinessParams = {
   servicesOffered: string[],
   accreditations: string[],
   licenseDocument: FormData | undefined,
-  doctorsId: DoctorParams[],
+  doctorsId: string[] | undefined,
   paymentMethods: string[],
   insuranceProviders: string[],
   dataPrivacyCompliance: boolean,

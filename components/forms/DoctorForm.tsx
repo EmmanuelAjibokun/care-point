@@ -8,7 +8,6 @@ import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
 import { DoctorFormValidation } from "@/lib/validation";
 import { z } from "zod";
-// import { useRouter } from "next/navigation";
 import { registerDoctor } from "@/lib/actions/business.actions";
 
 import "react-phone-number-input/style.css";
@@ -18,9 +17,10 @@ import SubmitButton from "../SubmitButton";
 interface DoctorFormProps {
   setOpen: (open: boolean) => void;
   setDoctorsList: (doctors: Array<DoctorParams>) => void;
+  doctorsList: Array<DoctorParams>;
 }
 
-const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen, setDoctorsList }) => {
+const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen, setDoctorsList, doctorsList}) => {
   // const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -36,32 +36,27 @@ const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen, setDoctorsList }) => {
   // console.log("create newDoctor: ")
 
   // 2. Define a submit handler.
-  const onSubmit = async ({ fullname, email, phone }: z.infer<typeof DoctorFormValidation>) => {
-
+  const handleSubmit = form.handleSubmit(async (data) => {
     setIsLoading(true);
 
     try {
-      const doctorData = { fullname, email, phone }
-      const doctors = await registerDoctor(doctorData);
-      console.log("created doctors: ", doctors)
+      const newDoctor: DoctorParams = await registerDoctor(data);
       setError("")
-
-      if(doctors) {
-        setDoctorsList(doctors)
+      console.log("newly added doctor: ", newDoctor)
+      if(newDoctor) {
+        setDoctorsList([...doctorsList, newDoctor])
         setOpen(false)
       }
     } catch (error) {
       console.log(error)
-      // setError("Account Registered. Incorrect Email or Phone Number.")
+      setError("Account Registered. Incorrect Email or Phone Number.")
     }
-
-    setIsLoading(false);
-  }
-
+    setOpen(false);
+  });
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4 space-y-6 flex-1 text-start">
+      <form   className="mt-4 space-y-6 flex-1 text-start">
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
@@ -94,7 +89,9 @@ const DoctorForm: React.FC<DoctorFormProps> = ({ setOpen, setDoctorsList }) => {
         {error && <p className="shad-error text-12-regular mt-4 flex justify-center">{error}</p>}
         </div>
         
-        <SubmitButton isLoading={isLoading}>Save</SubmitButton>
+        <span onClick={handleSubmit}>
+          <SubmitButton isLoading={isLoading}>Save</SubmitButton>
+        </span>
       </form>
     </Form>
   );

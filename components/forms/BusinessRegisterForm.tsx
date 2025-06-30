@@ -2,16 +2,14 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-// import Image from "next/image";
 
 import { Form, FormControl } from "@/components/ui/form";
-// import CountryDropdown from "../ui/country-dropdown";
+
 import CustomFormField, { FormFieldType } from "../CustomFormField";
 import { useState } from "react";
 import { BusinessFormValidation } from "@/lib/validation";
 import { z } from "zod";
-// import { useRouter } from "next/navigation";
-// import { createUser } from "@/lib/actions/patient.actions";
+import { useRouter } from "next/navigation";
 
 import "react-phone-number-input/style.css";
 import SubmitButton from "../SubmitButton";
@@ -44,11 +42,13 @@ const BusinessRegisterForm = () => {
   const [open, setOpen] = useState(false);
   const [doctorsList, setDoctorsList] = useState<DoctorParams[]>([]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-    }
-  };
+  const router = useRouter()
+
+  // const handleKeyDown = (e: React.KeyboardEvent<HTMLFormElement>) => {
+  //   if (e.key === "Enter") {
+  //     e.preventDefault();
+  //   }
+  // };
 
   const form = useForm<z.infer<typeof BusinessFormValidation>>({
     resolver: zodResolver(BusinessFormValidation),
@@ -116,7 +116,7 @@ const BusinessRegisterForm = () => {
         accreditations: values.accreditations,
         hospitalLogo: logoData ? logoData : undefined,
         licenseDocument: licenseData ? licenseData : undefined,
-        doctorsId: [...doctorsList],
+        doctorsId: [doctorsList.map((doctor) => doctor.$id)],
         paymentMethods: values.paymentMethods,
         insuranceProviders: [...tags],
         dataPrivacyCompliance: values.dataPrivacyCompliance,
@@ -128,32 +128,16 @@ const BusinessRegisterForm = () => {
       const newBusiness = await registerBusiness(hospital);
 
       console.log("Newly registered Business:", newBusiness);
+
+      if (newBusiness) {
+        router.push("/admin")
+      }
     } catch (error) {
       console.log(error);
     }
 
     setIsLoading(false);
   };
-
-  // const onSubmit = () => {
-  //   console.log("clicked")
-  //   setIsLoading(false)
-  //   return
-  // }
-
-  // const handleCountrySelect = (countryCode: string) => {
-  //   console.log('Selected country code:', countryCode);
-  // };
-
-  // Add a tag
-  // const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter" && inputValue.trim() !== "") {
-  //     if (!tags.includes(inputValue)) {
-  //       setTags((prevTags) => [...prevTags, inputValue]);
-  //     }
-  //     setInputValue("");
-  //   }
-  // }
 
   // Remove a tag
   const removeTag = (indexToRemove: number) => {
@@ -169,8 +153,7 @@ const BusinessRegisterForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        // onSubmit={onSubmit}
-        onKeyDown={handleKeyDown}
+        // onKeyDown={handleKeyDown}
         className="space-y-12 flex-1"
       >
         {/* {console.log(formValues)} */}
@@ -417,6 +400,7 @@ const BusinessRegisterForm = () => {
                       <DoctorForm
                         setOpen={setOpen}
                         setDoctorsList={setDoctorsList}
+                        doctorsList={doctorsList}
                       />
                     </DialogDescription>
                   </DialogHeader>
@@ -425,6 +409,7 @@ const BusinessRegisterForm = () => {
 
               {/* Doctors List */}
               <div>
+                {console.log("Doctors List:", doctorsList)}
                 {doctorsList.map((doctor, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <li>{doctor.fullname}</li>
@@ -537,42 +522,6 @@ const BusinessRegisterForm = () => {
             setTags={setTags}
             removeTag={removeTag}
           />
-
-          {/* <div className="input-text-wrapper">
-            <div className="tags-input">
-              <div className="tags">
-                <ul className="tags-list">
-                  {tags.map((tag, index) => (
-                    <li className="tags-item" key={index}>
-                      <div className="input-tag">
-                        <span className="tag-text">{tag}</span>
-                        <button
-                          type="button"
-                          className="input-tag-delete-button"
-                          onClick={() => removeTag(index)}
-                          aria-label={`delete ${tag} tag`}
-                        >
-                          <span className="icon-x" aria-hidden="true">
-                            x
-                          </span>
-                        </button>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <input
-                id="elements"
-                type="text"
-                className="tags-input-text"
-                placeholder="Add Insurance Provider here"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyDown={addTag}
-              />
-            </div>
-          </div> */}
         </section>
 
         {/* SECURITY AND COMPLIANCE */}
